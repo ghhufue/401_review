@@ -1,14 +1,15 @@
 # ECE4010J Midterm Cheating Sheet
 
-> Version: v0.3  
+> Version: v0.4  
 > 用途：考试速查 + 做题模板。中文解释为主，保留关键英文术语。  
-> 原则：所有概念和例题都保留稳定 ID；概念区和例题区分开，通过 Mapping 表互相引用。
+> 原则：所有概念和例题都保留稳定 ID；概念区和例题区分开，通过 Mapping 表互相引用。  
+> Print Note: 考试只能带纸质材料。Markdown 链接可以保留，但主要索引必须依靠打印后仍可见的 `Concept ID` 和 `Example ID`。
 
 ---
 
 ## 0. Quick Index
 
-| 题目问什么 | Go to Concept | Main Template | Related Examples |
+| 题目问什么 | Concept ID | Main Template | Example ID |
 |---|---|---|---|
 | PMF / PDF / CDF 区分 | [C-RV-001](#c-rv-001) | 离散求和，连续积分，CDF 通用 | [EX-RV-001](#ex-rv-001) |
 | 求 \(E[X]\)、\(Var(X)\)、\(E[g(X)]\) | [C-RV-002](#c-rv-002) | 先 \(E[X]\)、\(E[X^2]\)，再方差；LOTUS 直接求 \(E[g(X)]\) | [EX-RV-002](#ex-rv-002) |
@@ -208,7 +209,7 @@ because [fixed quantity / random quantity / keyword].
 | Binomial(\(n,p\)) | \(0,1,...,n\) | \({n\choose k}p^k(1-p)^{n-k}\) | \(np\) | \(np(1-p)\) |
 | Geometric(\(p\)) | \(1,2,...\) | \((1-p)^{k-1}p\) | \(1/p\) | \((1-p)/p^2\) |
 | Negative Binomial(\(r,p\)) | \(r,r+1,...\) | \({k-1\choose r-1}p^r(1-p)^{k-r}\) | \(r/p\) | \(r(1-p)/p^2\) |
-| Hypergeometric(\(N,K,n\)) | valid \(k\) | \(rac{{K\choose k}{N-K\choose n-k}}{{N\choose n}}\) | \(nK/N\) | \(n\frac KN(1-\frac KN)\frac{N-n}{N-1}\) |
+| Hypergeometric(\(N,K,n\)) | valid \(k\) | \(\frac{{K\choose k}{N-K\choose n-k}}{{N\choose n}}\) | \(nK/N\) | \(n\frac KN(1-\frac KN)\frac{N-n}{N-1}\) |
 | Poisson(\(\lambda\)) | \(0,1,2,...\) | \(e^{-\lambda}\lambda^k/k!\) | \(\lambda\) | \(\lambda\) |
 
 ---
@@ -622,7 +623,7 @@ Common MGFs:
 | Bernoulli(\(p\)) | \(1-p+pe^t\) |
 | Binomial(\(n,p\)) | \((1-p+pe^t)^n\) |
 | Poisson(\(\lambda\)) | \(e^{\lambda(e^t-1)}\) |
-| Exponential(rate \(\lambda\)) | \(rac{\lambda}{\lambda-t}, t<\lambda\) |
+| Exponential(rate \(\lambda\)) | \(\frac{\lambda}{\lambda-t}, t<\lambda\) |
 | Normal(\(\mu,\sigma^2\)) | \(e^{\mu t+\frac12\sigma^2t^2}\) |
 
 ---
