@@ -85,10 +85,10 @@
 | \(Y=g(X)\) | transformation of random variable | 随机变量变换 | 已知 \(X\) 分布，求新变量 \(Y\) 的分布 |
 | \(F_Y(y)=P(Y\le y)\) | CDF method | CDF 方法 | 变换题最稳起点：把 \(Y\le y\) 改写成关于 \(X\) 的事件 |
 | \(g^{-1}(y)\) | inverse transformation | 反函数 / 逆变换 | 单调变换时用 |
-| \(f_Y(y)=f_X(g^{-1}(y))\left|\frac{d}{dy}g^{-1}(y)\right|\) | one-to-one transformation formula | 一维单调变换公式 | 记得绝对值和 \(Y\) 的 support |
+| \(f_Y(y)=f_X(g^{-1}(y))\left\lvert\frac{d}{dy}g^{-1}(y)\right\rvert\) | one-to-one transformation formula | 一维单调变换公式 | 记得绝对值和 \(Y\) 的 support |
 | \(M=\max(X_1,\dots,X_n)\) | maximum / largest order statistic | 最大值 | \(F_M(x)=P(M\le x)=P(X_1\le x,\dots,X_n\le x)\) |
 | \(N=\min(X_1,\dots,X_n)\) | minimum / smallest order statistic | 最小值 | 常用 \(P(N>x)=P(X_1>x,\dots,X_n>x)\) |
-| \(J\) | Jacobian | 雅可比行列式 | 二维变换：\(J=\left|\frac{\partial(x,y)}{\partial(u,v)}\right|\) |
+| \(J\) | Jacobian | 雅可比行列式 | 二维变换：\(J=\left\lvert\frac{\partial(x,y)}{\partial(u,v)}\right\rvert\) |
 | \(f_{U,V}(u,v)\) | joint PDF after transformation | 变换后联合密度 | \(f_{U,V}=f_{X,Y}(x(u,v),y(u,v))J\) |
 | \(Z=X+Y\) | sum of random variables | 随机变量求和 | 独立连续时常用 convolution |
 | \(f_Z(z)\) | PDF of the sum | 和的密度 | \(f_Z(z)=\int f_X(x)f_Y(z-x)dx\) |
@@ -366,7 +366,7 @@ because [fixed quantity / random quantity / keyword].
 | Binomial(\(n,p\)) | \(0,1,...,n\) | \({n\choose k}p^k(1-p)^{n-k}\) | \(np\) | \(np(1-p)\) |
 | Geometric(\(p\)) | \(1,2,...\) | \((1-p)^{k-1}p\) | \(1/p\) | \((1-p)/p^2\) |
 | Negative Binomial(\(r,p\)) | \(r,r+1,...\) | \({k-1\choose r-1}p^r(1-p)^{k-r}\) | \(r/p\) | \(r(1-p)/p^2\) |
-| Hypergeometric(\(N,K,n\)) | valid \(k\) | \(rac{{K\choose k}{N-K\choose n-k}}{{N\choose n}}\) | \(nK/N\) | \(n\frac KN(1-\frac KN)\frac{N-n}{N-1}\) |
+| Hypergeometric(\(N,K,n\)) | valid \(k\) | \(\frac{{K\choose k}{N-K\choose n-k}}{{N\choose n}}\) | \(nK/N\) | \(n\frac KN(1-\frac KN)\frac{N-n}{N-1}\) |
 | Poisson(\(\lambda\)) | \(0,1,2,...\) | \(e^{-\lambda}\lambda^k/k!\) | \(\lambda\) | \(\lambda\) |
 
 ---
@@ -489,7 +489,7 @@ Steps:
 If \(Y=g(X)\) is monotone and \(x=g^{-1}(y)\):
 
 \[
-f_Y(y)=f_X(g^{-1}(y))\left|\frac{d}{dy}g^{-1}(y)\right|
+f_Y(y)=f_X(g^{-1}(y))\left\lvert\frac{d}{dy}g^{-1}(y)\right\rvert
 \]
 
 Linear special case:
@@ -588,7 +588,7 @@ x=x(u,v), \qquad y=y(u,v)
 3. Compute:
 
 \[
-J=\left|\frac{\partial(x,y)}{\partial(u,v)}\right|
+J=\left\lvert\frac{\partial(x,y)}{\partial(u,v)}\right\rvert
 \]
 
 4. Then:
@@ -826,7 +826,7 @@ Common MGFs:
 | Bernoulli(\(p\)) | \(1-p+pe^t\) |
 | Binomial(\(n,p\)) | \((1-p+pe^t)^n\) |
 | Poisson(\(\lambda\)) | \(e^{\lambda(e^t-1)}\) |
-| Exponential(rate \(\lambda\)) | \(rac{\lambda}{\lambda-t}, t<\lambda\) |
+| Exponential(rate \(\lambda\)) | \(\frac{\lambda}{\lambda-t}, t<\lambda\) |
 | Normal(\(\mu,\sigma^2\)) | \(e^{\mu t+\frac12\sigma^2t^2}\) |
 
 ---
@@ -1173,8 +1173,8 @@ x=u-v, \qquad y=v
 Jacobian:
 
 \[
-J=\left|\frac{\partial(x,y)}{\partial(u,v)}\right|=
-\left|\begin{matrix}1&-1\\0&1\end{matrix}\right|=1
+J=\left\lvert\frac{\partial(x,y)}{\partial(u,v)}\right\rvert=
+\left\lvert\begin{matrix}1&-1\\0&1\end{matrix}\right\rvert=1
 \]
 
 \[
