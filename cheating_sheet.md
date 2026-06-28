@@ -348,6 +348,64 @@ because [fixed quantity / random quantity / keyword].
 | measurement error / large sample | Normal | mean/variance | value |
 | lifetime / hazard / reliability | Exponential / Weibull | hazard pattern | failure time |
 
+# Common Recognition Examples
+
+> **Exam Use:** 看到题目时，先写 `Let X = ...`，再写 `$X \sim ...$`。
+> 关键不是背故事，而是识别 **fixed quantity** 和 **random quantity**。
+
+## Distribution Recognition Table
+
+| Distribution                 | 常见例子                                               | Let $X=$ / Let $T=$      | Distribution Expression                                               | Why / 识别理由                                                     |
+| ---------------------------- | -------------------------------------------------- | ------------------------ | --------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Bernoulli $(p)$              | 一个零件是否 defective；一次投篮是否命中；一次检测是否阳性                 | 一次试验是否成功，成功记 $1$，失败记 $0$ | $X \sim \mathrm{Bern}(p)$                                             | 只有一次 trial，结果只有 $0/1$                                          |
+| Binomial $(n,p)$             | 10 个零件中有几个 defective；20 次投篮中命中几次；10 只小鼠中死亡几只       | 固定 $n$ 次独立试验中的成功次数       | $X \sim \mathrm{Bin}(n,p)$                                            | fixed number of independent trials，每次成功概率相同                    |
+| Geometric $(p)$              | 一直抽产品直到第一次 defective；一直投篮直到第一次命中；第一次成功出现在第几次       | 第一次成功所需的试验次数             | $X \sim \mathrm{Geom}(p)$                                             | random quantity 是 trial number；目标是 first success               |
+| Negative Binomial $(r,p)$    | 一直检测直到第 4 个不合格品；一直投篮直到第 5 次命中；第 $r$ 次成功出现在第几次      | 第 $r$ 次成功所需的总试验次数        | $X \sim \mathrm{NegBin}(r,p)$                                         | fixed target 是 $r$ successes；random quantity 是 total trials    |
+| Hypergeometric $(N,K,n)$     | 20 个芯片中 3 个坏，随机取 5 个，问取到几个坏；一副牌抽 5 张问几张 A          | 不放回抽样中抽到的成功 / 坏品数量       | $X \sim \mathrm{Hypergeom}(N,K,n)$                                    | finite population + without replacement                        |
+| Poisson $(\lambda)$          | 1 小时内电话数；1 页纸上的错字数；$1\text{ cm}^2$ 区域内细菌数；单位时间内事故数 | 固定时间 / 面积 / 长度内事件发生次数    | $X \sim \mathrm{Pois}(\lambda)$                                       | random quantity 是 count；$\lambda$ 是该区间内平均发生次数                  |
+| Poisson Process Count        | 电话以 rate $3/\text{hour}$ 到达，问 2 小时内几个电话            | 时间区间 $[0,t]$ 内的事件数       | $N(t) \sim \mathrm{Pois}(\lambda t)$                                  | 给的是 rate，需要乘以区间长度                                              |
+| Exponential rate $(\lambda)$ | 等下一通电话的时间；机器到下一次故障的等待时间；下一次地震前等待多久                 | 等到下一次事件发生的时间             | $T \sim \mathrm{Exp}(\lambda)$                                        | Poisson process 的 waiting time；random quantity 是 time，不是 count |
+| Gamma $(k,\lambda)$          | 等第 3 通电话的时间；等第 5 次故障发生的时间；第 $k$ 个事件到来前的等待时间        | 等到第 $k$ 次事件发生的时间         | $T \sim \mathrm{Gamma}(k,\lambda)$                                    | waiting time until the $k$-th event                            |
+| Uniform $(a,b)$              | 随机数在 0 到 1 之间均匀产生；误差在 $[-0.5,0.5]$ 内等可能            | 区间内均匀取到的数值               | $X \sim \mathrm{Unif}(a,b)$                                           | every point in interval is equally likely                      |
+| Normal $(\mu,\sigma^2)$      | 测量误差；身高 / 重量近似分布；大量独立小误差叠加；样本均值近似                  | 连续测量值或近似值                | $X \sim N(\mu,\sigma^2)$                                              | symmetric bell shape；或由 CLT / approximation 得到                 |
+| Weibull                      | 寿命问题中 hazard 随时间增加 / 减少；材料疲劳寿命；机械部件可靠性             | failure time / lifetime  | $T \sim \mathrm{Weibull}(\alpha,\beta)$ or $R(t)=e^{-\alpha t^\beta}$ | reliability / hazard 题；$\beta$ controls hazard shape           |
+
+---
+
+## Mini Examples with Expressions
+
+| Problem Text                                                                                              | Let $X=$ or Let $T=$                          | Correct Distribution                                 |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ---------------------------------------------------- |
+| A component is defective with probability $0.02$. Test one component.                                     | $X=1$ if defective, $X=0$ otherwise           | $X \sim \mathrm{Bern}(0.02)$                         |
+| 100 components are tested independently, each defective with probability $0.02$.                          | number of defective components                | $X \sim \mathrm{Bin}(100,0.02)$                      |
+| Keep testing components until the first defective one appears. Each is defective with probability $0.02$. | trial number of the first defective component | $X \sim \mathrm{Geom}(0.02)$                         |
+| Keep testing components until the 3rd defective one appears. Each is defective with probability $0.02$.   | trial number of the 3rd defective component   | $X \sim \mathrm{NegBin}(3,0.02)$                     |
+| A box has 20 chips, 3 defective. Draw 5 without replacement.                                              | number of defective chips drawn               | $X \sim \mathrm{Hypergeom}(N=20,K=3,n=5)$            |
+| Bacteria appear randomly with average $0.025$ per $1\text{ cm}^2$.                                        | number of bacteria in $1\text{ cm}^2$         | $X \sim \mathrm{Pois}(0.025)$                        |
+| Calls arrive at rate 4 per hour. Count calls in 3 hours.                                                  | number of calls in 3 hours                    | $X \sim \mathrm{Pois}(12)$                           |
+| Calls arrive at rate 4 per hour. Wait for the next call.                                                  | waiting time until next call                  | $T \sim \mathrm{Exp}(4)$                             |
+| Calls arrive at rate 4 per hour. Wait until the 5th call.                                                 | waiting time until 5th call                   | $T \sim \mathrm{Gamma}(5,4)$                         |
+| A value is chosen uniformly from 2 to 10.                                                                 | chosen value                                  | $X \sim \mathrm{Unif}(2,10)$                         |
+| Measurement error has mean 0 and standard deviation 2.                                                    | measurement error                             | $X \sim N(0,4)$                                      |
+| A lifetime model has reliability $R(t)=e^{-0.01t^2}$.                                                     | failure time                                  | Weibull reliability form with $\alpha=0.01, \beta=2$ |
+
+---
+
+## Exam Tips
+
+> **Poisson vs Exponential / Gamma**
+> Poisson asks: **how many events in a fixed interval**.
+> Exponential / Gamma asks: **how long to wait**.
+
+> **Binomial vs Geometric / Negative Binomial**
+> Binomial fixes the **number of trials**.
+> Geometric / Negative Binomial fixes the **number of successes**.
+
+> **Binomial vs Hypergeometric**
+> Binomial is **independent / with replacement**.
+> Hypergeometric is **without replacement**.
+
+
 > Exam Tip: Binomial 和 Hypergeometric 的核心区别是是否 independent / replacement。Poisson 和 Exponential 的核心区别是 count vs waiting time。
 
 ---
