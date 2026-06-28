@@ -1,16 +1,149 @@
 # ECE4010J Midterm Cheating Sheet
 
-> Version: v0.4  
+> Version: v0.5  
 > 用途：考试速查 + 做题模板。中文解释为主，保留关键英文术语。  
 > 原则：所有概念和例题都保留稳定 ID；概念区和例题区分开，通过 Mapping 表互相引用。  
-> Print Note: 考试只能带纸质材料。Markdown 链接可以保留，但主要索引必须依靠打印后仍可见的 `Concept ID` 和 `Example ID`。
+> Print Note: 考试只能带纸质材料。Markdown 链接可以保留，但主要索引必须依靠打印后仍可见的 `Concept ID` 和 `Example ID`。  
+> v0.5 Update: 在最前面加入常用概率符号、函数写法、英文缩写和考试表达速查表，避免考试时看不懂 \(f_X(x)\)、\(F_X(x)\)、\(E[g(X)]\)、\(f_{X\mid Y}(x\mid y)\) 等符号。
 
 ---
 
-## 0. Quick Index
+## 0. Symbol / Abbreviation Reference
+
+这一节用于解决一个很常见的问题：**题目和答案里出现很多类似 \(f_X(x)\)、\(F_X(x)\)、\(p_{X,Y}(x,y)\)、\(E[g(X)]\)、\(X\sim Bin(n,p)\) 的表达时，先看懂符号本身是什么意思。**
+
+> Exam Tip: 大写字母通常表示 random variable，小写字母通常表示它取到的具体数值。比如 \(X\) 是随机变量，\(x\) 是某个具体值。
+
+### 0.1 Random Variable Notation
+
+| Symbol / Expression | English Name | 中文含义 | 用在什么地方 | Exam Meaning |
+|---|---|---|---|---|
+| \(X,Y,Z\) | random variable, RV | 随机变量 | 所有概率题 | 结果还没确定的量，例如 defect count, waiting time, lifetime |
+| \(x,y,z\) | realization / value | 随机变量的具体取值 | 公式、积分、求和 | \(X=x\) 表示随机变量 \(X\) 取到具体值 \(x\) |
+| \(X=x\) | event that \(X\) equals \(x\) | \(X\) 正好等于 \(x\) | 离散型概率 | 离散型可有正概率；连续型通常概率为 0 |
+| \(a<X<b\) | interval event | 区间事件 | 连续型概率 | 用 PDF 积分或 CDF 相减 |
+| \(X\sim Distribution(parameters)\) | follows / is distributed as | \(X\) 服从某分布 | 分布识别 | 例如 \(X\sim Bin(n,p)\)、\(T\sim Exp(\lambda)\) |
+| \(X_1,\dots,X_n\) | sample / sequence of RVs | 一组随机变量 | max/min, sum, iid | 常表示多次试验、多个样本、多个部件寿命 |
+| \(X_i\stackrel{iid}{\sim}F\) | independent and identically distributed | 独立同分布 | max/min, CLT, sample | 每个 \(X_i\) 独立，且分布一样 |
+| \(I_A\) or \(\mathbf 1_A\) | indicator random variable | 指示随机变量 | 计数、期望技巧 | 事件 \(A\) 发生取 1，否则取 0；\(E[I_A]=P(A)\) |
+
+---
+
+### 0.2 PMF / PDF / CDF / Survival / Hazard
+
+| Symbol | English Full Name | English Abbrev. | 中文 | Applies To | Meaning / Formula | How to Use |
+|---|---|---|---|---|---|---|
+| \(p_X(x)\) | probability mass function | PMF | 概率质量函数 | discrete RV | \(p_X(x)=P(X=x)\) | 点概率；求概率靠求和 |
+| \(f_X(x)\) | probability density function | PDF | 概率密度函数 | continuous RV | \(P(a<X<b)=\int_a^b f_X(x)dx\) | 不是点概率；求概率靠积分 |
+| \(F_X(x)\) | cumulative distribution function | CDF | 累积分布函数 | all RVs | \(F_X(x)=P(X\le x)\) | 最通用；变换题常从它开始 |
+| \(S_X(x)\) | survival function | survival | 生存函数 / 尾概率 | lifetime / reliability | \(S_X(x)=P(X>x)=1-F_X(x)\) | reliability 里常写 \(R(t)\) |
+| \(R(t)\) | reliability function | reliability | 可靠度函数 | failure time \(T\) | \(R(t)=P(T>t)=1-F_T(t)\) | 部件在 \(t\) 时刻仍然工作的概率 |
+| \(h(t)\) | hazard function / hazard rate | hazard | 风险率 / 失效率 | reliability | \(h(t)=f_T(t)/R(t)\) | 已经活到 \(t\) 时，瞬时失败倾向 |
+| \(\rho(t)\) | hazard rate | hazard | 风险率 | reliability | sometimes same as \(h(t)\) | 注意不同讲义可能用 \(h\) 或 \(\rho\) |
+
+> Warning: \(f_X(x)\) 的下标是 \(X\)，括号里通常写小写 \(x\)。严格写法是 \(f_X(x)\)，不是 \(f_X(X)\)。\(f_X(X)\) 也能在高级语境中出现，但考试基础题里通常是把 PDF 当函数，对具体值 \(x\) 代入。
+
+---
+
+### 0.3 Expectation / Moment / Variance Notation
+
+| Symbol / Expression | English Name | 中文 | Formula / Meaning | Exam Usage |
+|---|---|---|---|---|
+| \(E[X]\) | expectation / expected value / mean | 期望 / 均值 | 离散：\(\sum_x xp_X(x)\)；连续：\(\int xf_X(x)dx\) | 长期平均值 |
+| \(\mu_X\) or \(\mu\) | mean | 均值 | \(\mu_X=E[X]\) | 常用于 Normal, approximation |
+| \(E[g(X)]\) | expectation of a function of \(X\) | 函数的期望 | LOTUS: \(\sum g(x)p_X(x)\) or \(\int g(x)f_X(x)dx\) | 不必先求 \(Y=g(X)\) 分布 |
+| \(E[X^2]\) | second moment | 二阶矩 | \(E[X^2]=\sum x^2p(x)\) or \(\int x^2f(x)dx\) | 算方差的中间量 |
+| \(E[X^n]\) | nth moment | n 阶矩 | \(n\)-th raw moment | MGF 或矩计算 |
+| \(Var(X)\) | variance | 方差 | \(Var(X)=E[(X-E[X])^2]=E[X^2]-E[X]^2\) | 衡量波动大小 |
+| \(\sigma_X^2\) or \(\sigma^2\) | variance | 方差 | \(\sigma_X^2=Var(X)\) | Normal(\(\mu,\sigma^2\)) 里第二个参数是方差 |
+| \(\sigma_X\) or \(\sigma\) | standard deviation | 标准差 | \(\sigma=\sqrt{Var(X)}\) | 标准化 \(Z=(X-\mu)/\sigma\) |
+| \(Cov(X,Y)\) | covariance | 协方差 | \(Cov(X,Y)=E[XY]-E[X]E[Y]\) | 判断线性同向/反向关系 |
+| \(\rho_{X,Y}\) | correlation coefficient | 相关系数 | \(\rho=Cov(X,Y)/(\sigma_X\sigma_Y)\) | 范围 \([-1,1]\) |
+
+---
+
+### 0.4 Conditional / Joint Notation
+
+| Symbol / Expression | English Name | 中文 | Meaning / Formula | Common Trap |
+|---|---|---|---|---|
+| \(p_{X,Y}(x,y)\) | joint PMF | 联合概率质量函数 | \(P(X=x,Y=y)\) | 离散型用求和 |
+| \(f_{X,Y}(x,y)\) | joint PDF | 联合概率密度函数 | \(P((X,Y)\in A)=\iint_A f_{X,Y}(x,y)dxdy\) | 不是点概率 |
+| \(f_X(x)\) | marginal PDF of \(X\) | \(X\) 的边缘密度 | \(f_X(x)=\int f_{X,Y}(x,y)dy\) | 对另一个变量积分掉 |
+| \(f_Y(y)\) | marginal PDF of \(Y\) | \(Y\) 的边缘密度 | \(f_Y(y)=\int f_{X,Y}(x,y)dx\) | 积分范围必须来自 support |
+| \(f_{X\mid Y}(x\mid y)\) | conditional PDF | 条件密度 | \(f_{X\mid Y}(x\mid y)=f_{X,Y}(x,y)/f_Y(y)\) | 分母是条件里的变量 \(Y\) 的 marginal |
+| \(P(A\mid B)\) | conditional probability | 条件概率 | \(P(A\mid B)=P(A\cap B)/P(B)\) | 不要写成 \(P(B\mid A)\) |
+| \(E[X\mid Y=y]\) | conditional expectation at \(Y=y\) | 固定 \(y\) 后的条件期望 | 一个关于 \(y\) 的函数或数字 | 不是随机变量，除非把 \(y\) 换回 \(Y\) |
+| \(E[X\mid Y]\) | conditional expectation given RV \(Y\) | 给定随机变量 \(Y\) 的条件期望 | 本身是 random variable，通常等于 \(g(Y)\) | 和 \(E[X\mid Y=y]\) 区分 |
+| \(X\perp Y\) | independent | 独立 | \(f_{X,Y}(x,y)=f_X(x)f_Y(y)\) | support 也必须能拆成矩形/乘积区域 |
+
+---
+
+### 0.5 Transformation Notation
+
+| Symbol / Expression | English Name | 中文 | Meaning / Template |
+|---|---|---|---|
+| \(Y=g(X)\) | transformation of random variable | 随机变量变换 | 已知 \(X\) 分布，求新变量 \(Y\) 的分布 |
+| \(F_Y(y)=P(Y\le y)\) | CDF method | CDF 方法 | 变换题最稳起点：把 \(Y\le y\) 改写成关于 \(X\) 的事件 |
+| \(g^{-1}(y)\) | inverse transformation | 反函数 / 逆变换 | 单调变换时用 |
+| \(f_Y(y)=f_X(g^{-1}(y))\left|\frac{d}{dy}g^{-1}(y)\right|\) | one-to-one transformation formula | 一维单调变换公式 | 记得绝对值和 \(Y\) 的 support |
+| \(M=\max(X_1,\dots,X_n)\) | maximum / largest order statistic | 最大值 | \(F_M(x)=P(M\le x)=P(X_1\le x,\dots,X_n\le x)\) |
+| \(N=\min(X_1,\dots,X_n)\) | minimum / smallest order statistic | 最小值 | 常用 \(P(N>x)=P(X_1>x,\dots,X_n>x)\) |
+| \(J\) | Jacobian | 雅可比行列式 | 二维变换：\(J=\left|\frac{\partial(x,y)}{\partial(u,v)}\right|\) |
+| \(f_{U,V}(u,v)\) | joint PDF after transformation | 变换后联合密度 | \(f_{U,V}=f_{X,Y}(x(u,v),y(u,v))J\) |
+| \(Z=X+Y\) | sum of random variables | 随机变量求和 | 独立连续时常用 convolution |
+| \(f_Z(z)\) | PDF of the sum | 和的密度 | \(f_Z(z)=\int f_X(x)f_Y(z-x)dx\) |
+
+---
+
+### 0.6 Common Distribution Abbreviations
+
+| Abbrev. / Notation | Full English Name | 中文 | Random Quantity | Key Parameter Meaning |
+|---|---|---|---|---|
+| \(Bern(p)\) | Bernoulli distribution | 伯努利分布 | 一次 0/1 试验结果 | \(p=P(success)\) |
+| \(Bin(n,p)\) | Binomial distribution | 二项分布 | 固定 \(n\) 次独立试验中的成功次数 | \(n\)=trial count, \(p\)=success prob |
+| \(Geom(p)\) | Geometric distribution | 几何分布 | 第一次成功等到第几次 | \(p\)=success prob |
+| \(NegBin(r,p)\) | Negative Binomial distribution | 负二项分布 | 第 \(r\) 次成功等到第几次 | \(r\)=success target, \(p\)=success prob |
+| \(Hypergeom(N,K,n)\) | Hypergeometric distribution | 超几何分布 | 不放回抽样中的成功数 | \(N\)=population, \(K\)=successes in population, \(n\)=draws |
+| \(Pois(\lambda)\) | Poisson distribution | 泊松分布 | 固定区间内事件数 | \(\lambda\)=mean count |
+| \(Unif(a,b)\) | Uniform distribution | 均匀分布 | 在区间内均匀取值 | \(a,b\)=lower/upper bounds |
+| \(Exp(\lambda)\) | Exponential distribution, rate form | 指数分布 | 等下一次事件的时间 | \(\lambda\)=rate, mean \(1/\lambda\) |
+| \(Exp(\beta)\) | Exponential distribution, scale form | 指数分布 | 等下一次事件的时间 | \(\beta\)=scale, mean \(\beta\) |
+| \(Gamma(\alpha,\lambda)\) | Gamma distribution, rate form | 伽马分布 | 等第 \(\alpha\) 次事件的时间 | \(\alpha\)=shape, \(\lambda\)=rate |
+| \(N(\mu,\sigma^2)\) | Normal distribution | 正态分布 | 测量误差 / 近似分布 | \(\mu\)=mean, \(\sigma^2\)=variance |
+| \(Weibull\) | Weibull distribution | 威布尔分布 | 寿命 / 可靠性 | hazard 可递增、递减或常数 |
+
+---
+
+### 0.7 English Abbreviations Used in This Sheet
+
+| Abbrev. | Full English | 中文 | One-line Exam Meaning |
+|---|---|---|---|
+| RV | random variable | 随机变量 | 随机结果对应的数值 |
+| PMF | probability mass function | 概率质量函数 | 离散型点概率 \(P(X=x)\) |
+| PDF | probability density function | 概率密度函数 | 连续型靠面积/积分求概率 |
+| CDF | cumulative distribution function | 累积分布函数 | \(F_X(x)=P(X\le x)\) |
+| LOTUS | Law of the Unconscious Statistician | 无意识统计学家定律 | 不求 \(Y=g(X)\) 分布直接算 \(E[g(X)]\) |
+| MGF | moment generating function | 矩母函数 | \(M_X(t)=E[e^{tX}]\)，求矩、求独立和分布 |
+| iid / i.i.d. | independent and identically distributed | 独立同分布 | 独立且每个变量分布一样 |
+| LHS | left-hand side | 左边 | 等式/不等式左侧 |
+| RHS | right-hand side | 右边 | 等式/不等式右侧 |
+| w.r.t. | with respect to | 关于 | derivative/integral with respect to \(x\) 表示对 \(x\) 求导/积分 |
+| iff | if and only if | 当且仅当 | 双向成立 |
+| approx. | approximately | 近似 | 用于 Poisson/Normal approximation |
+| CC | continuity correction | 连续性修正 | 离散转连续时边界加减 0.5 |
+| support | support / valid range | 取值范围 | PDF/PMF 非零的区域；答案必须写 |
+| marginal | marginal distribution | 边缘分布 | 从 joint 中把另一个变量求和/积分掉 |
+| conditional | conditional distribution | 条件分布 | 已知某条件后的分布 |
+| convolution | convolution | 卷积 | 独立随机变量求和的 PDF 方法 |
+| Jacobian | Jacobian determinant | 雅可比行列式 | 多维变量变换的面积修正因子 |
+
+---
+
+## 1. Quick Index
 
 | 题目问什么 | Concept ID | Main Template | Example ID |
 |---|---|---|---|
+| 看不懂概率符号 / 英文缩写 | Section 0 | 先查 symbol，再回到对应 Concept ID | all examples |
 | PMF / PDF / CDF 区分 | [C-RV-001](#c-rv-001) | 离散求和，连续积分，CDF 通用 | [EX-RV-001](#ex-rv-001) |
 | 求 \(E[X]\)、\(Var(X)\)、\(E[g(X)]\) | [C-RV-002](#c-rv-002) | 先 \(E[X]\)、\(E[X^2]\)，再方差；LOTUS 直接求 \(E[g(X)]\) | [EX-RV-002](#ex-rv-002) |
 | 根据文字判断分布 | [C-DIST-000](#c-dist-000) | `Let X = ...` → `X follows ... because ...` | [EX-DIST-001](#ex-dist-001) |
@@ -22,7 +155,7 @@
 | \(Y=\max\)、\(Y=\min\) | [C-TRANS-002](#c-trans-002) | max 用 CDF，min 用 survival | [EX-TRANS-002](#ex-trans-002), [EX-TRANS-003](#ex-trans-003) |
 | 二维变换 / 和分布 | [C-TRANS-003](#c-trans-003), [C-TRANS-004](#c-trans-004) | inverse → support → Jacobian；sum → convolution | [EX-TRANS-004](#ex-trans-004), [EX-TRANS-005](#ex-trans-005) |
 | Joint pdf 大题 | [C-JOINT-001](#c-joint-001) | support → marginal → conditional → expectation → independence | [EX-JOINT-001](#ex-joint-001), [EX-JOINT-002](#ex-joint-002), [EX-JOINT-003](#ex-joint-003) |
-| Conditional expectation | [C-COND-001](#c-cond-001) | \(f_{X|Y}\) → \(E[X|Y=y]\) → \(E[X|Y]\) | [EX-COND-001](#ex-cond-001) |
+| Conditional expectation | [C-COND-001](#c-cond-001) | \(f_{X\mid Y}\) → \(E[X\mid Y=y]\) → \(E[X\mid Y]\) | [EX-COND-001](#ex-cond-001) |
 | Covariance / correlation / independence | [C-COV-001](#c-cov-001) | \(Cov=E[XY]-E[X]E[Y]\)，独立看 joint 是否可拆 | [EX-COV-001](#ex-cov-001), [EX-COV-002](#ex-cov-002) |
 | Reliability / hazard / Weibull | [C-REL-001](#c-rel-001) | \(R(t)=P(T>t)\)，\(h(t)=f(t)/R(t)\) | [EX-REL-001](#ex-rel-001), [EX-REL-002](#ex-rel-002), [EX-REL-003](#ex-rel-003) |
 | MGF | [C-MGF-001](#c-mgf-001) | 求矩、独立和、识别分布 | [EX-MGF-001](#ex-mgf-001), [EX-MGF-002](#ex-mgf-002) |
@@ -30,7 +163,7 @@
 
 ---
 
-## 1. Concept-to-Example Map
+## 2. Concept-to-Example Map
 
 | Concept ID | Concept Name | Tags | Related Examples |
 |---|---|---|---|
@@ -53,7 +186,7 @@
 
 ---
 
-## 2. Tag Index
+## 3. Tag Index
 
 | Tag | Meaning | Related Concepts | Related Examples |
 |---|---|---|---|
@@ -81,18 +214,19 @@
 
 ---
 
-## 3. How to Use This Sheet
+## 4. How to Use This Sheet
 
-1. 先用 Quick Index 找题型。
-2. 查 Concept ID 看公式和模板。
-3. 如果题目像某个例题，跳到 Example ID。
-4. 做完后回到 Common Traps 检查 support、条件、连续/离散是否写错。
+1. 先看 Section 0：遇到陌生符号或缩写，先查它是什么意思。
+2. 再用 Quick Index 找题型。
+3. 查 Concept ID 看公式、适用条件、模板。
+4. 如果题目像某个例题，跳到 Example ID。
+5. 做完后回到 Common Traps 检查 support、条件、连续/离散、rate/scale 是否写错。
 
-> Exam Tip: 不要只背公式。考试得分关键是：**识别题型 → 定义随机变量 → 找 support → 套正确模板**。
+> Exam Tip: 不要只背公式。考试得分关键是：**识别题型 → 定义随机变量 → 找 support → 套正确模板 → 检查符号和条件。**
 
 ---
 
-## 4. Core Concepts
+## 5. Core Concepts
 
 <a id="c-rv-001"></a>
 
@@ -105,8 +239,8 @@
 | 名称 | English | 适用 | 含义 | 求概率方式 |
 |---|---|---|---|---|
 | PMF | probability mass function | discrete | \(p_X(x)=P(X=x)\) | 求和 |
-| PDF | probability density function | continuous | 密度，不是点概率 | 积分 |
-| CDF | cumulative distribution function | all RVs | \(F_X(x)=P(X\le x)\) | 相减或求导 |
+| PDF | probability density function | continuous | \(f_X(x)\) 是密度，不是点概率 | 积分 |
+| CDF | cumulative distribution function | all RVs | \(F_X(x)=P(X\le x)\) | 相减、求导、处理变换 |
 
 Key formulas:
 
@@ -120,6 +254,18 @@ P(a<X<b)=\int_a^b f_X(x)\,dx
 
 \[
 F_X(x)=P(X\le x), \qquad f_X(x)=F_X'(x) \text{ for continuous RV}
+\]
+
+Discrete CDF jump:
+
+\[
+P(X=x)=F_X(x)-F_X(x^-)
+\]
+
+Continuous interval by CDF:
+
+\[
+P(a<X\le b)=F_X(b)-F_X(a)
 \]
 
 > Warning: 连续型随机变量 \(P(X=x)=0\)。PDF 的某个点的值不是概率。
@@ -143,7 +289,7 @@ E[X]=\sum_x x p_X(x), \qquad E[g(X)]=\sum_x g(x)p_X(x)
 Continuous:
 
 \[
-E[X]=\int x f_X(x)\,dx, \qquad E[g(X)]=\int g(x)f_X(x)\,dx
+E[X]=\int_{-\infty}^{\infty} x f_X(x)\,dx, \qquad E[g(X)]=\int_{-\infty}^{\infty} g(x)f_X(x)\,dx
 \]
 
 Variance:
@@ -159,6 +305,17 @@ E[aX+b]=aE[X]+b, \qquad Var(aX+b)=a^2Var(X)
 \]
 
 LOTUS means: 求 \(E[g(X)]\) 时，不一定要先求 \(Y=g(X)\) 的分布。
+
+Common LOTUS examples:
+
+| Asked quantity | \(g(x)\) | Compute by |
+|---|---|---|
+| \(E[X^2]\) | \(x^2\) | \(\sum x^2p(x)\) or \(\int x^2f(x)dx\) |
+| \(E[(X-c)^2]\) | \((x-c)^2\) | \(\sum (x-c)^2p(x)\) or \(\int (x-c)^2f(x)dx\) |
+| \(E[e^{tX}]\) | \(e^{tx}\) | this is MGF |
+| \(E[aX+b]\) | \(ax+b\) | can also use linearity |
+
+> Warning: 一般 \(E[g(X)]\ne g(E[X])\)。例如 \(E[X^2]\ne (E[X])^2\)。
 
 ---
 
@@ -205,11 +362,11 @@ because [fixed quantity / random quantity / keyword].
 
 | Distribution | Support | PMF | Mean | Variance |
 |---|---|---|---|---|
-| Bernoulli(\(p\)) | \(0,1\) | \(P(X=1)=p\) | \(p\) | \(p(1-p)\) |
+| Bernoulli(\(p\)) | \(0,1\) | \(P(X=1)=p, P(X=0)=1-p\) | \(p\) | \(p(1-p)\) |
 | Binomial(\(n,p\)) | \(0,1,...,n\) | \({n\choose k}p^k(1-p)^{n-k}\) | \(np\) | \(np(1-p)\) |
 | Geometric(\(p\)) | \(1,2,...\) | \((1-p)^{k-1}p\) | \(1/p\) | \((1-p)/p^2\) |
 | Negative Binomial(\(r,p\)) | \(r,r+1,...\) | \({k-1\choose r-1}p^r(1-p)^{k-r}\) | \(r/p\) | \(r(1-p)/p^2\) |
-| Hypergeometric(\(N,K,n\)) | valid \(k\) | \(\frac{{K\choose k}{N-K\choose n-k}}{{N\choose n}}\) | \(nK/N\) | \(n\frac KN(1-\frac KN)\frac{N-n}{N-1}\) |
+| Hypergeometric(\(N,K,n\)) | valid \(k\) | \(rac{{K\choose k}{N-K\choose n-k}}{{N\choose n}}\) | \(nK/N\) | \(n\frac KN(1-\frac KN)\frac{N-n}{N-1}\) |
 | Poisson(\(\lambda\)) | \(0,1,2,...\) | \(e^{-\lambda}\lambda^k/k!\) | \(\lambda\) | \(\lambda\) |
 
 ---
@@ -224,12 +381,12 @@ because [fixed quantity / random quantity / keyword].
 
 | Distribution | Support | PDF / CDF | Mean | Variance |
 |---|---|---|---|---|
-| Uniform(\(a,b\)) | \(a<x<b\) | \(f(x)=1/(b-a)\) | \((a+b)/2\) | \((b-a)^2/12\) |
+| Uniform(\(a,b\)) | \(a<x<b\) | \(f(x)=1/(b-a)\), \(F(x)=\frac{x-a}{b-a}\) for \(a<x<b\) | \((a+b)/2\) | \((b-a)^2/12\) |
 | Exponential(rate \(\lambda\)) | \(x>0\) | \(f(x)=\lambda e^{-\lambda x}\), \(F(x)=1-e^{-\lambda x}\) | \(1/\lambda\) | \(1/\lambda^2\) |
 | Exponential(scale \(\beta\)) | \(x>0\) | \(f(x)=\frac1\beta e^{-x/\beta}\) | \(\beta\) | \(\beta^2\) |
 | Gamma(shape \(\alpha\), rate \(\lambda\)) | \(x>0\) | \(f(x)=\frac{\lambda^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\lambda x}\) | \(\alpha/\lambda\) | \(\alpha/\lambda^2\) |
 | Normal(\(\mu,\sigma^2\)) | \(\mathbb R\) | \(f(x)=\frac1{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/(2\sigma^2)}\) | \(\mu\) | \(\sigma^2\) |
-| Weibull via reliability | \(t>0\) | \(R(t)=e^{-\alpha t^\beta}\) | usually table | usually table |
+| Weibull via reliability | \(t>0\) | \(R(t)=e^{-\alpha t^\beta}\), \(h(t)=\alpha\beta t^{\beta-1}\) | usually table | usually table |
 
 > Warning: Exponential 的 rate \(\lambda\) 和 scale \(\beta=1/\lambda\) 很容易混。
 
@@ -335,6 +492,24 @@ If \(Y=g(X)\) is monotone and \(x=g^{-1}(y)\):
 f_Y(y)=f_X(g^{-1}(y))\left|\frac{d}{dy}g^{-1}(y)\right|
 \]
 
+Linear special case:
+
+\[
+Y=aX+b,\quad a\ne0
+\]
+
+\[
+f_Y(y)=\frac{1}{|a|}f_X\left(\frac{y-b}{a}\right)
+\]
+
+Non-monotone special case:
+
+\[
+f_Y(y)=\sum_{x_i:g(x_i)=y}\frac{f_X(x_i)}{|g'(x_i)|}
+\]
+
+> Warning: transformation 答案必须写 \(Y\) 的 support。
+
 ---
 
 <a id="c-trans-002"></a>
@@ -345,28 +520,50 @@ f_Y(y)=f_X(g^{-1}(y))\left|\frac{d}{dy}g^{-1}(y)\right|
 **Related Examples:** [EX-TRANS-002](#ex-trans-002), [EX-TRANS-003](#ex-trans-003)  
 **Depth Level:** Must Understand
 
-For \(Y=\max(X_1,X_2)\):
+For \(M=\max(X_1,\dots,X_n)\):
 
 \[
-F_Y(y)=P(Y\le y)=P(X_1\le y,X_2\le y)
+F_M(y)=P(M\le y)=P(X_1\le y,\dots,X_n\le y)
 \]
 
 If independent:
 
 \[
-F_Y(y)=F_{X_1}(y)F_{X_2}(y)
+F_M(y)=\prod_{i=1}^n F_{X_i}(y)
 \]
 
-For \(Y=\min(X_1,X_2)\):
+If iid:
 
 \[
-P(Y>y)=P(X_1>y,X_2>y)
+F_M(y)=[F_X(y)]^n, \qquad f_M(y)=n[F_X(y)]^{n-1}f_X(y)
+\]
+
+For \(N=\min(X_1,\dots,X_n)\):
+
+\[
+P(N>y)=P(X_1>y,\dots,X_n>y)
 \]
 
 If independent:
 
 \[
-F_Y(y)=1-[1-F_{X_1}(y)][1-F_{X_2}(y)]
+F_N(y)=1-\prod_{i=1}^n[1-F_{X_i}(y)]
+\]
+
+If iid:
+
+\[
+F_N(y)=1-[1-F_X(y)]^n, \qquad f_N(y)=n[1-F_X(y)]^{n-1}f_X(y)
+\]
+
+Discrete iid:
+
+\[
+P(M=k)=[F(k)]^n-[F(k-1)]^n
+\]
+
+\[
+P(N=k)=[1-F(k-1)]^n-[1-F(k)]^n
 \]
 
 ---
@@ -418,7 +615,13 @@ If \(Z=X+Y\) and \(X,Y\) independent continuous RVs:
 f_Z(z)=\int_{-\infty}^{\infty} f_X(x)f_Y(z-x)\,dx
 \]
 
-The real work is finding the valid integration interval from support.
+Discrete version:
+
+\[
+p_Z(z)=\sum_x p_X(x)p_Y(z-x)
+\]
+
+The real work is finding the valid integration/summation interval from support.
 
 ---
 
@@ -464,7 +667,7 @@ Given f_XY(x,y):
 3. Find conditional: f_X|Y(x|y)=f_XY(x,y)/f_Y(y).
 4. Find E[X|Y=y]=∫ x f_X|Y(x|y) dx.
 5. Use E[X]=E[E[X|Y]] if useful.
-6. Check independence: f_XY ?= f_X f_Y.
+6. Check independence: f_XY ?= f_X f_Y and support can be separated.
 ```
 
 ---
@@ -525,7 +728,7 @@ X,Y \text{ independent} \Rightarrow Cov(X,Y)=0
 \]
 
 \[
-Cov(X,Y)=0 \nRightarrow X,Y \text{ independent}
+Cov(X,Y)=0 \not\Rightarrow X,Y \text{ independent}
 \]
 
 For jointly Gaussian:
@@ -623,12 +826,12 @@ Common MGFs:
 | Bernoulli(\(p\)) | \(1-p+pe^t\) |
 | Binomial(\(n,p\)) | \((1-p+pe^t)^n\) |
 | Poisson(\(\lambda\)) | \(e^{\lambda(e^t-1)}\) |
-| Exponential(rate \(\lambda\)) | \(\frac{\lambda}{\lambda-t}, t<\lambda\) |
+| Exponential(rate \(\lambda\)) | \(rac{\lambda}{\lambda-t}, t<\lambda\) |
 | Normal(\(\mu,\sigma^2\)) | \(e^{\mu t+\frac12\sigma^2t^2}\) |
 
 ---
 
-## 5. Exam Templates
+## 6. Exam Templates
 
 ### T-DIST — Distribution Recognition
 
@@ -649,6 +852,27 @@ Continuous: P(a<X<b)=∫_a^b f_X(x)dx.
 CDF: P(a<X≤b)=F_X(b)-F_X(a).
 ```
 
+### T-EXPECT — Expectation / Variance
+
+```text
+1. Find E[X].
+2. Find E[X^2] using LOTUS.
+3. Var(X)=E[X^2]-(E[X])^2.
+4. For E[g(X)], directly compute Σg(x)p(x) or ∫g(x)f(x)dx.
+```
+
+### T-TRANS — Transformation by CDF
+
+```text
+1. Define Y=g(X).
+2. Start from F_Y(y)=P(Y≤y).
+3. Rewrite as P(g(X)≤y).
+4. Solve the valid X-region.
+5. Use the distribution of X.
+6. Differentiate if f_Y(y) is needed.
+7. Always write support of Y.
+```
+
 ### T-JOINT — Joint Density Big Problem
 
 ```text
@@ -657,7 +881,7 @@ CDF: P(a<X≤b)=F_X(b)-F_X(a).
 3. Marginalize by integrating out the other variable.
 4. Conditional = joint / marginal.
 5. Conditional expectation = integral of x times conditional density.
-6. Independence check = joint ? product of marginals.
+6. Independence check = joint ? product of marginals and support ? rectangular.
 ```
 
 ### T-REL — Reliability Conditional Probability
@@ -672,7 +896,7 @@ Then use conditional probability: P(A|B)=P(A∩B)/P(B).
 
 ---
 
-## 6. Worked Examples
+## 7. Worked Examples
 
 <a id="ex-rv-001"></a>
 
@@ -1125,6 +1349,8 @@ For independence, check:
 f_{X,Y}(x,y)=f_X(x)f_Y(y)
 \]
 
+and also check whether support can be separated into \(X\)-range times \(Y\)-range.
+
 ---
 
 <a id="ex-rel-001"></a>
@@ -1254,6 +1480,9 @@ X\sim N(3,4)
 |---|---|
 | Treat PDF value as probability | Continuous probability must integrate PDF |
 | Forget \(P(X=x)=0\) for continuous RV | Single point probability is zero |
+| Write \(f_X(X)\) when you mean the PDF formula | Usually use \(f_X(x)\) for density at value \(x\) |
+| Confuse PMF \(p_X(x)\) and PDF \(f_X(x)\) | PMF gives point probability; PDF gives density |
+| Confuse CDF \(F_X(x)\) and PDF \(f_X(x)\) | CDF is cumulative probability; PDF is derivative of CDF for continuous RV |
 | Confuse independent and disjoint | Independent: \(P(A\cap B)=P(A)P(B)\); disjoint: \(A\cap B=\varnothing\) |
 | Covariance zero means independent | False unless jointly Gaussian is given |
 | Use Binomial for without replacement | Without replacement → Hypergeometric |
@@ -1264,16 +1493,21 @@ X\sim N(3,4)
 | Mix exponential rate and scale | rate \(\lambda\): mean \(1/\lambda\); scale \(\beta\): mean \(\beta\) |
 | Use max/min wrong event | max: \(Y\le y\); min: \(Y>y\) often easier |
 | Forget transformed support in Jacobian | Formula without support is incomplete |
+| Forget absolute value in transformation | PDF correction factor must be nonnegative |
+| For non-one-to-one transformation, use only one root | Sum over all roots \(x_i:g(x_i)=y\) |
 
 ---
 
 ## 14. Final Self-check
 
-- [ ] I can distinguish PMF / PDF / CDF.
+- [ ] I can distinguish random variable \(X\) from value \(x\).
+- [ ] I can distinguish \(p_X(x)\), \(f_X(x)\), and \(F_X(x)\).
+- [ ] I can translate PMF / PDF / CDF / LOTUS / MGF / iid.
 - [ ] I can choose sum vs integral.
 - [ ] I can identify Binomial / Geometric / Negative Binomial / Hypergeometric.
 - [ ] I can identify Poisson count vs Exponential waiting time.
 - [ ] I can use normal approximation with continuity correction.
+- [ ] I can use LOTUS to compute \(E[g(X)]\).
 - [ ] I can use CDF method for non-one-to-one transformation.
 - [ ] I can handle max/min templates.
 - [ ] I remember Jacobian = inverse transform derivative absolute value.
