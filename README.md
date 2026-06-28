@@ -14,12 +14,12 @@
 cheating_sheet.md
 ```
 
-用户平时主要只看这个文件。其他文件只是辅助资料或归档材料。
+用户平时主要只看这个文件。其他文件只是辅助资料、归档材料或自动化脚本。
 
 `cheating_sheet.md` 的定位是：
 
 ```text
-考试速查表 + 公式表 + 题型模板 + 符号/缩写说明 + 结构化例题索引
+考试速查表 + 公式表 + 题型模板 + 符号/缩写说明 + Worked Examples
 ```
 
 其中最前面的 **Symbol / Abbreviation Reference** 用于解释常见概率符号和英文缩写，例如：
@@ -50,42 +50,18 @@ f_{X,Y}(x,y), f_{X|Y}(x|y), R(t), h(t), M_X(t), iid, PMF, PDF, CDF, LOTUS, MGF
 
 但不能依赖链接跳转作为主要索引方式。因为打印成纸质材料后，链接不会生效。
 
-所以主索引必须依赖 **可打印、可肉眼查找的编号系统**：
+所以主索引应尽量依赖 **可打印、可肉眼查找的编号系统**：
 
 ```text
 Concept ID: C-模块-编号
 Example ID: EX-模块-编号
 ```
 
-例如：
-
-```text
-C-RV-001      PMF / PDF / CDF
-C-RV-002      Expectation / Variance / LOTUS
-C-DIST-001    Discrete Distributions
-C-TRANS-001   CDF Method
-C-JOINT-001   Joint Distribution Workflow
-C-REL-001     Reliability / Hazard
-
-EX-RV-001     Continuous PDF Probability
-EX-DIST-003   Hypergeometric Recognition
-EX-JOINT-001  Joint Density Complete Workflow
-EX-REL-002    Series and Parallel Systems
-```
-
-维护文档时要保证：
-
-- 链接可以保留；
-- 链接文字必须是清晰可打印的 ID；
-- 表格中必须直接显示 Concept ID 和 Example ID；
-- 不要只写“见这里”“点击这里”“跳转到本节”；
-- 打印出来后，读者应该仍能通过编号找到对应内容。
+不过从现在开始，**新增例题不再强制同步维护 Quick Index、Concept-to-Example Map、Tag Index、Related Examples**。这些已有映射关系保留，但不作为新增例题的强制维护负担。
 
 ---
 
 ## 3. 文档设计原则
-
-`cheating_sheet.md` 必须遵循以下原则。
 
 ### 3.1 考试速查优先，但不要过度压缩
 
@@ -99,10 +75,9 @@ EX-REL-002    Series and Parallel Systems
 - 题型识别关键词；
 - 解题模板；
 - 常见陷阱；
-- 结构化例题；
-- Concept ID 与 Example ID 的映射关系。
+- 结构化例题。
 
-但是不要为了“短”而删掉会影响考场理解的内容。特别是以下内容不应被省略：
+不要为了“短”而删掉会影响考场理解的内容。特别是以下内容不应被省略：
 
 - \(X\) 和 \(x\) 的区别；
 - \(p_X(x)\)、\(f_X(x)\)、\(F_X(x)\) 的区别；
@@ -130,49 +105,29 @@ EX-REL-002    Series and Parallel Systems
 
 完整例题必须放在 `Worked Examples` 区域。
 
-不要把完整例题塞进概念区。
-
-### 3.3 所有概念和例题必须有稳定 ID
-
-Concept ID 格式：
-
-```text
-C-模块缩写-编号
-```
-
-Example ID 格式：
-
-```text
-EX-模块缩写-编号
-```
-
-常见模块缩写：
-
-| Module | Meaning |
-|---|---|
-| `RV` | Random Variable basics |
-| `DIST` | Distributions |
-| `APPROX` | Approximation |
-| `PP` | Poisson Process |
-| `TRANS` | Transformation |
-| `JOINT` | Joint Distribution |
-| `COND` | Conditional Expectation |
-| `COV` | Covariance / Correlation |
-| `REL` | Reliability |
-| `MGF` | Moment Generating Function |
-
-### 3.4 不要轻易改已有 ID
+### 3.3 稳定 ID
 
 已有 ID 一旦建立，后续不要因为重排章节而修改。
 
 原因：
 
 - 用户会在纸质材料上通过编号查找；
-- Mapping 表依赖这些编号；
 - 后续 AI 维护时也依赖这些编号；
 - 改 ID 会破坏旧笔记和交叉引用。
 
-如果必须重构，优先保留旧 ID，并只新增新 ID。
+如果是通过自动脚本新增的例题，可以使用：
+
+```text
+EX-AUTO-001, EX-AUTO-002, ...
+```
+
+如果确实想手动指定某个编号，也可以用：
+
+```text
+EX-DIST-005
+EX-TRANS-006
+EX-JOINT-004
+```
 
 ---
 
@@ -197,74 +152,116 @@ EX-模块缩写-编号
 
 说明：
 
-- `Symbol / Abbreviation Reference` 放在最前面，用来解释符号、函数写法、英文缩写和分布记号；
-- `Quick Index` 用于最快速定位题型；
-- `Concept-to-Example Map` 用编号连接概念和例题；
-- `Tag Index` 用于跨章节搜索；
-- `How to Use This Sheet` 说明考试时怎么查；
+- `Symbol / Abbreviation Reference` 放在最前面；
 - `Core Concepts` 放概念、公式、模板和必要解释；
 - `Exam Templates` 放可直接套用的解题流程；
 - `Worked Examples` 放完整例题；
 - `Common Traps` 放考试常见错误；
 - `Final Self-check` 放考前自检清单。
 
-章节编号不必为了连续而牺牲稳定性。比如 `Common Traps` 可以继续保留为 Section 13，只要打印后好找即可。
-
 ---
 
-## 5. 新增内容时的维护流程
+## 5. 新增例题的推荐流程：自动插入
 
-如果接手的 AI 要继续维护，请按这个流程：
-
-### Step 1：判断内容类型
-
-先判断新内容属于哪类：
+为了降低维护成本，新增例题默认使用脚本：
 
 ```text
-符号说明 / 英文缩写 / 概念 / 公式 / 解题模板 / 完整例题 / 常见陷阱 / 复习计划
+scripts/add_worked_example.py
 ```
 
-### Step 2：放到正确位置
+这个脚本只做一件事：
 
-- 符号、英文缩写、常用函数写法 → `Symbol / Abbreviation Reference`；
-- 概念、公式、模板 → `Core Concepts`；
-- 通用解题流程 → `Exam Templates`；
-- 完整题目、解答过程 → `Worked Examples`；
-- 常见错误 → `Common Traps`；
-- 文档维护说明 → `README.md` 或 `materials/`。
+```text
+把新的 worked example 插入到 cheating_sheet.md 的固定 marker 上方。
+```
 
-### Step 3：分配或沿用 ID
+它不会强制更新：
 
-- 新概念：分配新的 `C-...` 编号；
-- 新例题：分配新的 `EX-...` 编号；
-- 已有概念或例题：沿用原 ID，不要重命名；
-- 单纯符号说明通常不需要 Concept ID，但如果它变成独立考点，可以新增一个 Concept ID。
+- `Quick Index`
+- `Concept-to-Example Map`
+- `Tag Index`
+- 相关概念的 `Related Examples`
 
-### Step 4：同步更新索引
+这些旧映射关系可以继续保留；如果将来有精力再手动整理，但不再作为每次新增例题的必要步骤。
 
-新增或修改后必须检查并更新：
+### 5.1 插入 marker
 
-1. `Quick Index`
-2. `Concept-to-Example Map`
-3. `Tag Index`
-4. 相关概念中的 `Related Examples`
-5. 相关例题中的 `Related Concepts`
-6. `Common Traps` 中是否需要新增易错点
-7. `Final Self-check` 中是否需要新增检查项
+脚本使用下面的 marker：
 
-### Step 5：纸质可读性检查
+```markdown
+<!-- AUTO-WORKED-EXAMPLE-INSERT-BEFORE -->
+```
 
-最后检查：
+规则：
 
-- 打印出来后是否还能靠 ID 找到内容；
-- 表格里是否直接显示了编号；
-- 是否有只依赖链接跳转的表达；
-- 是否有过短表达导致考场看不懂；
-- 是否遗漏 support / 条件 / 适用范围；
-- 是否把 PDF 写成点概率；
-- 是否把 \(f_X(x)\)、\(F_X(x)\)、\(p_X(x)\) 混在一起；
-- 是否把 rate 和 scale 混在一起；
-- 是否把 \(E[X|Y=y]\) 和 \(E[X|Y]\) 混在一起。
+```text
+每次新增例题，都插入到这个 marker 的上方。
+marker 本身保留在原地，方便下次继续插入。
+```
+
+如果 `cheating_sheet.md` 里暂时没有 marker，脚本会自动在 `## 13. Common Traps` 前创建一个 auto-insert zone。
+
+### 5.2 使用方法
+
+准备一个 markdown 文件作为题目本体，例如：
+
+```text
+docs/examples/EX-DIST-005-poisson-area-scaling.md
+```
+
+然后运行：
+
+```bash
+python scripts/add_worked_example.py \
+  --title "Poisson Area Scaling" \
+  --tags poisson area-scaling at-least-one \
+  --body-file docs/examples/EX-DIST-005-poisson-area-scaling.md
+```
+
+如果不指定 `--id`，脚本会自动生成：
+
+```text
+EX-AUTO-001
+EX-AUTO-002
+...
+```
+
+如果想指定 ID：
+
+```bash
+python scripts/add_worked_example.py \
+  --id EX-DIST-005 \
+  --title "Poisson Area Scaling" \
+  --tags poisson area-scaling at-least-one \
+  --body-file docs/examples/EX-DIST-005-poisson-area-scaling.md
+```
+
+### 5.3 安全检查
+
+脚本会检查：
+
+- marker 是否唯一；
+- Example ID 是否已经存在；
+- anchor 是否重复；
+- body file 是否存在；
+- 插入后 marker 是否仍然保留；
+- 插入后 anchor 是否只出现一次。
+
+### 5.4 推荐提交流程
+
+```bash
+git checkout -b add-example
+python scripts/add_worked_example.py \
+  --id EX-DIST-005 \
+  --title "Poisson Area Scaling" \
+  --tags poisson area-scaling at-least-one \
+  --body-file docs/examples/EX-DIST-005-poisson-area-scaling.md
+
+git diff -- cheating_sheet.md
+git diff --check
+git add cheating_sheet.md
+git commit -m "Add EX-DIST-005 Poisson area scaling"
+```
 
 ---
 
@@ -303,16 +300,19 @@ EX-模块缩写-编号
 
 ```text
 materials/
+docs/examples/
+scripts/
 ```
 
-其中包括：
+其中：
 
 ```text
-materials/cheating_sheet_document_design_guidelines.md
-materials/ece4010j_two_day_review_guide.md
+materials/        归档和维护参考
+docs/examples/    可复用 worked example markdown
+scripts/          自动维护脚本
 ```
 
-这些文件是归档和维护参考。真正考试复习主要看：
+真正考试复习主要看：
 
 ```text
 cheating_sheet.md
@@ -325,5 +325,5 @@ cheating_sheet.md
 如果一个新的 AI 接手，请直接遵守下面这句话：
 
 ```text
-请维护根目录 cheating_sheet.md。它是只能打印成纸质材料使用的考试速查表，所以必须保留清晰的 Symbol / Abbreviation Reference、Concept ID、Example ID、Mapping、Tag Index；Markdown 链接可以保留，但不能作为主要索引，主要索引必须靠打印后仍可见的符号表和编号完成。新增内容时，不要为了追求简洁而删掉关键符号解释、公式条件、support 或常见陷阱；概念和例题分开写，并同步更新 Quick Index、Concept-to-Example Map 和 Tag Index。
+请维护根目录 cheating_sheet.md。它是只能打印成纸质材料使用的考试速查表。新增例题时，优先使用 scripts/add_worked_example.py，将题目 markdown 插入到 AUTO-WORKED-EXAMPLE-INSERT-BEFORE marker 上方；不要每次都强制维护 Quick Index、Concept-to-Example Map、Tag Index 和 Related Examples。已有映射关系可以保留，必要时再手动整理。新增内容时，不要为了追求简洁而删掉关键符号解释、公式条件、support 或常见陷阱。
 ```
