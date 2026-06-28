@@ -1,3 +1,3 @@
-# 01 — PMF / CDF / Expectation / Variance / LOTUS
+# 01 — PMF / PDF / CDF
 
 placeholder
