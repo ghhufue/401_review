@@ -8,15 +8,15 @@
 
 | 文件 | 主要内容 | 题量 |
 |---|---|---:|
-| [`01_estimators_mom_mle.md`](01_estimators_mom_mle.md) | Statistic, Bias, Variance, MSE, Consistency, MOM, MLE | 7 |
-| [`02_reference_distributions_ci.md`](02_reference_distributions_ci.md) | Z / t / chi-square / F，均值与方差置信区间 | 6 |
-| [`03_one_sample_tests_power.md`](03_one_sample_tests_power.md) | 单样本均值/方差检验，Type I/II error，Power，样本量 | 6 |
-| [`04_two_sample_and_paired.md`](04_two_sample_and_paired.md) | F test, pooled t, Welch t, paired t，均值差区间 | 6 |
-| [`05_nonparametric_and_categorical.md`](05_nonparametric_and_categorical.md) | Sign, signed-rank, rank-sum, chi-square GOF/independence | 7 |
-| [`06_regression_and_correlation.md`](06_regression_and_correlation.md) | OLS, SSE, coefficient inference, prediction, correlation, diagnostics | 6 |
-| [`07_method_selection_mixed.md`](07_method_selection_mixed.md) | 检验方法选择与综合题 | 12 |
+| [`01_estimators_mom_mle.md`](01_estimators_mom_mle.md) | Statistic, Bias, Variance, MSE, Consistency, MOM, MLE | 8 |
+| [`02_reference_distributions_ci.md`](02_reference_distributions_ci.md) | Z / t / chi-square / F，均值与方差置信区间 | 7 |
+| [`03_one_sample_tests_power.md`](03_one_sample_tests_power.md) | 单样本均值/方差检验，Type I/II error，Power，样本量 | 7 |
+| [`04_two_sample_and_paired.md`](04_two_sample_and_paired.md) | F test, pooled t, Welch t, paired t，均值差区间 | 7 |
+| [`05_nonparametric_and_categorical.md`](05_nonparametric_and_categorical.md) | Sign, signed-rank, rank-sum, chi-square GOF/independence | 8 |
+| [`06_regression_and_correlation.md`](06_regression_and_correlation.md) | OLS, SSE, coefficient inference, prediction, correlation, diagnostics | 8 |
+| [`07_method_selection_mixed.md`](07_method_selection_mixed.md) | 检验方法选择与综合题 | 15 |
 
-总计 **50 道题/小题**。其中计算题给出完整但压缩的步骤；方法选择题重点训练“看到题目就知道用什么”。
+总计 **60 道例题、方法选择小题与综合题**。其中计算题给出完整但压缩的步骤；方法选择题重点训练“看到题目就知道用什么”。
 
 ---
 
